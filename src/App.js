@@ -7,6 +7,8 @@ import Login from "./pages/login.js";
 import Chamados from "./pages/chamados.js";
 import MeusChamados from "./pages/meus-chamados.js";
 import Saldos from "./pages/saldos.js";
+import Pacotes from "./pages/pacotes.js";
+import Compra from "./pages/compra.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
@@ -37,6 +39,8 @@ export default function App() {
             <Route path="/transacoes" exact component={Transacoes} />
             <Route path="/chamados" exact component={Chamados} />
             <Route path="/login" exact component={Login} />
+            <Route path="/pacotes" exact component={Pacotes} />
+            <Route path="/compra/:compraId" exact component={Compra} />
           </Switch>
         </div>
       </Router>

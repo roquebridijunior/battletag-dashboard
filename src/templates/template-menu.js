@@ -22,8 +22,6 @@ import AccountCircletIcon from "@material-ui/icons/AccountCircle";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import StoreIcon from "@material-ui/icons/Store";
 import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
@@ -42,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   toolbarIcon: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     padding: "0 8px",
     ...theme.mixins.toolbar
   },
@@ -181,16 +179,15 @@ export default function TemplateMenu(props) {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          BattleTag
-          <IconButton onClick={handleDrawer}>
-            <ChevronLeftIcon />
-          </IconButton>
+          <Typography gutterBottom variant="h5" component="h2">
+            BATTLETAG
+          </Typography>
         </div>
         <Divider />
         <div>
           <List component="nav" className={classes.list}>
             <ListSubheader component="div">Loja</ListSubheader>
-            <ListItem button component={Link} to="/">
+            <ListItem button component={Link} to="/pacotes">
               <ListItemIcon>
                 <StoreIcon />
               </ListItemIcon>
@@ -210,6 +207,7 @@ export default function TemplateMenu(props) {
               </ListItemIcon>
               <ListItemText primary="Minhas Transações" />
             </ListItem>
+            <Divider />
             <ListSubheader component="div">Admin</ListSubheader>
             <ListItem button component={Link} to="/saldos">
               <ListItemIcon>
