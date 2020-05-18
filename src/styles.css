@@ -1,0 +1,7 @@
+.App {
+  @font-face {
+    font-family: GunPlay;
+    src: url("/assets/fonts/gunplay rg.ttf");
+  }
+  font-family: GunPlay;
+}
