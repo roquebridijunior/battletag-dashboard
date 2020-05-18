@@ -6,18 +6,19 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 import TemplateMenu from "../templates/template-menu.js";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%"
-  },
   button: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(3, 2)
   },
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1)
+  },
+  root: {
+    padding: theme.spacing(2)
   }
 }));
 
@@ -82,74 +83,78 @@ export default function Compra() {
     });
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   return (
     <TemplateMenu>
-      <Paper className={classes.root}>
-        <Stepper activeStep={activeStep}>
-          <Step key="pacote">
-            <StepLabel>Confira o Pacote</StepLabel>
-            <Typography variant="caption">Pacote 2</Typography>
-          </Step>
-          <Step key="identificacao">
-            <StepLabel>Identifique-se</StepLabel>
-            <Typography variant="caption">roquebridi@hotmail.com</Typography>
-          </Step>
-          <Step key="pagamento">
-            <StepLabel>Pagamento</StepLabel>
-          </Step>
-          <Step key="conclusao">
-            <StepLabel>Conclusão</StepLabel>
-          </Step>
-        </Stepper>
-        <div>
-          {activeStep === steps.length ? (
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Paper className={classes.root}>
+            <Stepper activeStep={activeStep}>
+              <Step key="pacote">
+                <StepLabel>Confira o Pacote</StepLabel>
+                <Typography variant="caption">Pacote 2</Typography>
+              </Step>
+              <Step key="identificacao">
+                <StepLabel>Identifique-se</StepLabel>
+                <Typography variant="caption">
+                  roquebridi@hotmail.com
+                </Typography>
+              </Step>
+              <Step key="pagamento">
+                <StepLabel>Pagamento</StepLabel>
+              </Step>
+              <Step key="conclusao">
+                <StepLabel>Conclusão</StepLabel>
+              </Step>
+            </Stepper>
             <div>
-              <Typography className={classes.instructions}>
-                Obrigado por realizar a compra. Seus 10.000 BattelTag Ammo estão
-                disponíveis na sua conta
-              </Typography>
-            </div>
-          ) : (
-            <div>
-              <Typography className={classes.instructions}>
-                {getStepContent(activeStep)}
-              </Typography>
-              <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className={classes.button}
-                >
-                  Voltar
-                </Button>
-                {isStepOptional(activeStep) && (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSkip}
-                    className={classes.button}
-                  >
-                    Pular
-                  </Button>
-                )}
+              {activeStep === steps.length ? (
+                <div>
+                  <Typography className={classes.instructions}>
+                    Obrigado por realizar a compra. Seus 10.000 BattelTag Ammo
+                    estão disponíveis na sua conta
+                  </Typography>
+                </div>
+              ) : (
+                <div>
+                  <Typography className={classes.instructions}>
+                    {getStepContent(activeStep)}
+                  </Typography>
+                  <div>
+                    <Button
+                      disabled={activeStep === 0}
+                      onClick={handleBack}
+                      className={classes.button}
+                    >
+                      Voltar
+                    </Button>
+                    {isStepOptional(activeStep) && (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSkip}
+                        className={classes.button}
+                      >
+                        Pular
+                      </Button>
+                    )}
 
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                  className={classes.button}
-                >
-                  {activeStep === steps.length - 1 ? "Finalizar" : "Próximo"}
-                </Button>
-              </div>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                      {activeStep === steps.length - 1
+                        ? "Finalizar"
+                        : "Próximo"}
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </Paper>
+          </Paper>
+        </Grid>
+      </Grid>
     </TemplateMenu>
   );
 }

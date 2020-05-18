@@ -12,24 +12,48 @@ import Compra from "./pages/compra.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-const palette = {
-  primary: { main: "#212121", contrastText: "#ffffff" },
-  secondary: { main: "#263238", contrastText: "#ffffff" },
-  type: "dark"
-};
-const themeName = "BattleTag Theme";
+import GunPlayWoff2 from "./assets/fonts/gunplay_rg-webfont.woff2";
+import GunPlayWoff from "./assets/fonts/gunplay_rg-webfont.woff";
 
-const theme = createMuiTheme({ palette, themeName });
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: "#212121", contrastText: "#ffffff" },
+    secondary: { main: "#263238", contrastText: "#ffffff" },
+    type: "dark"
+  },
+  typography: {
+    fontFamily: "gunplayregular"
+  },
+  overrides: {
+    MuiCssBaseline: {
+      "@global": {
+        "@font-face": {
+          fontFamily: "gunplayregular",
+          fontStyle: "normal",
+          fontDisplay: "swap",
+          fontWeight: "normal",
+          src: `
+            local('GunPlay'),
+            local('GunPlay Regular'),
+            url(${GunPlayWoff2}) format('woff2'),
+            url(${GunPlayWoff}) format('woff2')
+          `
+        }
+      }
+    }
+  }
+});
 
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Router>
-        <div className="App">
+      <div className="App">
+        <Router>
           <Switch>
-            <Route path="/" exact component={Painel} />
-            <Route path="/painel" exact component={Painel} />
-            <Route path="/meus-chamados" exact component={MeusChamados} />
+            <Route component={Painel} exact path="/" />
+            <Route component={Pacotes} exact path="/pacotes" />
+            <Route component={Painel} exact path="/painel" />
+            <Route component={MeusChamados} exact path="/meus-chamados" />
             <Route
               path="/minhas-transacoes"
               exact
@@ -39,11 +63,10 @@ export default function App() {
             <Route path="/transacoes" exact component={Transacoes} />
             <Route path="/chamados" exact component={Chamados} />
             <Route path="/login" exact component={Login} />
-            <Route path="/pacotes" exact component={Pacotes} />
             <Route path="/compra/:compraId" exact component={Compra} />
           </Switch>
-        </div>
-      </Router>
+        </Router>
+      </div>
     </ThemeProvider>
   );
 }

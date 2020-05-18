@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
+import { Link } from "react-router-dom";
 import TemplateMenu from "../templates/template-menu.js";
 import Typography from "@material-ui/core/Typography";
 
@@ -27,9 +27,6 @@ export default function Painel() {
               Saldo
             </Typography>
             <Typography component="p">BattleTag Ammo: 2.212</Typography>
-            <Link to="/pacotes">
-              <Button>Mais Pacotes</Button>
-            </Link>
             <Button variant="contained" component={Link} to="/pacotes">
               Mais Pacotes
             </Button>

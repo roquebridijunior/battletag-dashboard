@@ -5,8 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
 import TemplateMenu from "../templates/template-menu.js";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -25,7 +25,7 @@ export default function Painel() {
           <Grid item xs={12} md={6} lg={4}>
             <Paper className={fixedHeightPaper}>
               <Typography gutterBottom variant="h5" component="h2">
-                Pacote Final de Semana
+                Pacote Soldado
               </Typography>
               <Typography component="p">
                 100 BatteTag Ammo por R$ 1,00
@@ -38,7 +38,7 @@ export default function Painel() {
           <Grid item xs={12} md={6} lg={4}>
             <Paper className={fixedHeightPaper}>
               <Typography gutterBottom variant="h5" component="h2">
-                Pacote Caveira
+                Pacote Sargento
               </Typography>
               <Typography component="p">
                 1.000 BatteTag Ammo por R$ 9,90
@@ -51,7 +51,7 @@ export default function Painel() {
           <Grid item xs={12} md={6} lg={4}>
             <Paper className={fixedHeightPaper}>
               <Typography gutterBottom variant="h5" component="h2">
-                Pacote Matador
+                Pacote Tenente
               </Typography>
               <Typography component="p">
                 10.000 BatteTag Ammo por R$ 95,00
@@ -64,7 +64,7 @@ export default function Painel() {
           <Grid item xs={12} md={6} lg={4}>
             <Paper className={fixedHeightPaper}>
               <Typography gutterBottom variant="h5" component="h2">
-                Pacote Coronel
+                Pacote Capitão
               </Typography>
               <Typography component="p">
                 100.000 BatteTag Ammo por R$ 900,00
