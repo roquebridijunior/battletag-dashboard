@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import TemplateMenu2 from "../templates/template-menu2.js";
 import Fab from "@material-ui/core/Fab";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,7 +19,7 @@ export default function MeusChamados() {
   return (
     <TemplateMenu2>
       Meus Chamados
-      <Fab className={classes.fab}>
+      <Fab className={classes.fab} component={Link} to="/chamado">
         <AddIcon />
       </Fab>
     </TemplateMenu2>

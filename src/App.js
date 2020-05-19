@@ -5,6 +5,7 @@ import MinhasTransacoes from "./pages/minhas-transacoes.js";
 import Transacao from "./pages/transacao.js";
 import Transacoes from "./pages/transacoes.js";
 import Login from "./pages/login.js";
+import Chamado from "./pages/chamado.js";
 import Chamados from "./pages/chamados.js";
 import MeusChamados from "./pages/meus-chamados.js";
 import Saldos from "./pages/saldos.js";
@@ -58,6 +59,7 @@ export default function App() {
           <Route path="/saldos" exact component={Saldos} />
           <Route path="/transacao" exact component={Transacao} />
           <Route path="/transacoes" exact component={Transacoes} />
+          <Route path="/chamado" exact component={Chamado} />
           <Route path="/chamados" exact component={Chamados} />
           <Route path="/login" exact component={Login} />
           <Route path="/compra/:compraId" exact component={Compra} />

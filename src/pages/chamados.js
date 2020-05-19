@@ -1,9 +1,6 @@
 import React from "react";
 import MaterialTable from "material-table";
 import TemplateMenu2 from "../templates/template-menu2.js";
-import Fab from "@material-ui/core/Fab";
-import { makeStyles } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
 
 import { forwardRef } from "react";
 
@@ -24,16 +21,6 @@ import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 
 export default function Chamados() {
-  const useStyles = makeStyles(theme => ({
-    fab: {
-      position: "absolute",
-      bottom: theme.spacing(2),
-      right: theme.spacing(2)
-    }
-  }));
-
-  const classes = useStyles();
-
   const [state, setState] = React.useState({
     columns: [
       { title: "ID", field: "id", type: "numeric" },
@@ -153,9 +140,6 @@ export default function Chamados() {
         ]}
         onRowClick={(event, rowData, togglePanel) => togglePanel()}
       />
-      <Fab className={classes.fab}>
-        <AddIcon />
-      </Fab>
     </TemplateMenu2>
   );
 }
