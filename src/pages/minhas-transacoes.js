@@ -1,8 +1,10 @@
 import React from "react";
+import { forwardRef } from "react";
 import MaterialTable from "material-table";
 import TemplateMenu2 from "../templates/template-menu2.js";
-
-import { forwardRef } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
 import AddBox from "@material-ui/icons/AddBox";
 import Search from "@material-ui/icons/Search";
@@ -19,8 +21,17 @@ import Edit from "@material-ui/icons/Edit";
 import Clear from "@material-ui/icons/Clear";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
+import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
+
+const useStyles = makeStyles(theme => ({
+  grid: {
+    padding: theme.spacing(2)
+  }
+}));
 
 export default function MinhasTransacoes() {
+  const classes = useStyles();
+
   const [state, setState] = React.useState({
     columns: [
       { title: "ID", field: "id", type: "numeric" },
@@ -113,33 +124,42 @@ export default function MinhasTransacoes() {
 
   return (
     <TemplateMenu2>
-      <MaterialTable
-        title="Minhas Transações"
-        icons={tableIcons}
-        columns={state.columns}
-        data={state.data}
-        localization={localization}
-        detailPanel={[
-          {
-            tooltip: "Show Name",
-            render: rowData => {
-              return (
-                <div
-                  style={{
-                    fontSize: 100,
-                    textAlign: "center",
-                    color: "white",
-                    backgroundColor: "#43A047"
-                  }}
-                >
-                  TESTE - {rowData.name}
-                </div>
-              );
+      <Grid container className={classes.grid} justify="center">
+        <Grid item sm={12} md={8} lg={6}>
+          <MaterialTable
+            title={
+              <Typography gutterBottom variant="h6" component="h3">
+                <SwapHorizontalCircleIcon />
+                Minhas Transações
+              </Typography>
             }
-          }
-        ]}
-        onRowClick={(event, rowData, togglePanel) => togglePanel()}
-      />
+            icons={tableIcons}
+            columns={state.columns}
+            data={state.data}
+            localization={localization}
+            detailPanel={[
+              {
+                tooltip: "Show Name",
+                render: rowData => {
+                  return (
+                    <div
+                      style={{
+                        fontSize: 100,
+                        textAlign: "center",
+                        color: "white",
+                        backgroundColor: "#43A047"
+                      }}
+                    >
+                      TESTE - {rowData.name}
+                    </div>
+                  );
+                }
+              }
+            ]}
+            onRowClick={(event, rowData, togglePanel) => togglePanel()}
+          />
+        </Grid>
+      </Grid>
     </TemplateMenu2>
   );
 }
