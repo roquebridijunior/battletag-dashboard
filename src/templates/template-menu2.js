@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 import { Link } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
+import { makeStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import ListItemText from '@material-ui/core/ListItemText';
+import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -30,10 +30,10 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   brandName: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2)
   },
   body: {
-    paddingTop: theme.spacing(7),
+    paddingTop: theme.spacing(8)
   }
 }));
 
@@ -49,8 +49,11 @@ export default function TemplateMenu2(props) {
   };
 
   const [state, setState] = React.useState();
-  const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+  const toggleDrawer = open => event => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
     setState(open);
@@ -59,14 +62,17 @@ export default function TemplateMenu2(props) {
   return (
     <div>
       <React.Fragment>
-        <Drawer open={state} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
+        <Drawer open={state} onClose={toggleDrawer(false)}>
           <div
             role="presentation"
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
           >
-            <Typography variant="h5" component="h2"
-             className={classes.brandName}>
+            <Typography
+              variant="h5"
+              component="h2"
+              className={classes.brandName}
+            >
               BATTLETAG
             </Typography>
             <Divider />
@@ -117,7 +123,7 @@ export default function TemplateMenu2(props) {
         </Drawer>
       </React.Fragment>
       <AppBar>
-        <Toolbar >
+        <Toolbar>
           <IconButton
             edge="start"
             color="inherit"
@@ -133,7 +139,7 @@ export default function TemplateMenu2(props) {
             noWrap
             className={classes.toolbarTitle}
           >
-            Painel 
+            Painel
           </Typography>
           <IconButton color="inherit">
             <Badge>
@@ -160,9 +166,7 @@ export default function TemplateMenu2(props) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <div className={classes.body}>
-        {props.children}
-      </div>
+      <div className={classes.body}>{props.children}</div>
     </div>
   );
 }

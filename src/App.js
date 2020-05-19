@@ -2,6 +2,7 @@ import React from "react";
 import "./styles.css";
 import Painel from "./pages/painel.js";
 import MinhasTransacoes from "./pages/minhas-transacoes.js";
+import Transacao from "./pages/transacao.js";
 import Transacoes from "./pages/transacoes.js";
 import Login from "./pages/login.js";
 import Chamados from "./pages/chamados.js";
@@ -47,26 +48,21 @@ const theme = createMuiTheme({
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        <Router>
-          <Switch>
-            <Route component={Painel} exact path="/" />
-            <Route component={Pacotes} exact path="/pacotes" />
-            <Route component={Painel} exact path="/painel" />
-            <Route component={MeusChamados} exact path="/meus-chamados" />
-            <Route
-              path="/minhas-transacoes"
-              exact
-              component={MinhasTransacoes}
-            />
-            <Route path="/saldos" exact component={Saldos} />
-            <Route path="/transacoes" exact component={Transacoes} />
-            <Route path="/chamados" exact component={Chamados} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/compra/:compraId" exact component={Compra} />
-          </Switch>
-        </Router>
-      </div>
+      <Router>
+        <Switch>
+          <Route component={Painel} exact path="/" />
+          <Route component={Pacotes} exact path="/pacotes" />
+          <Route component={Painel} exact path="/painel" />
+          <Route component={MeusChamados} exact path="/meus-chamados" />
+          <Route path="/minhas-transacoes" exact component={MinhasTransacoes} />
+          <Route path="/saldos" exact component={Saldos} />
+          <Route path="/transacao" exact component={Transacao} />
+          <Route path="/transacoes" exact component={Transacoes} />
+          <Route path="/chamados" exact component={Chamados} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/compra/:compraId" exact component={Compra} />
+        </Switch>
+      </Router>
     </ThemeProvider>
   );
 }

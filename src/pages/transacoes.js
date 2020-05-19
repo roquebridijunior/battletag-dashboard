@@ -1,11 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import MaterialTable from "material-table";
 import TemplateMenu2 from "../templates/template-menu2.js";
 import Fab from "@material-ui/core/Fab";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 import { forwardRef } from "react";
 
+import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
 import AddIcon from "@material-ui/icons/Add";
 import AddBox from "@material-ui/icons/AddBox";
 import Search from "@material-ui/icons/Search";
@@ -137,7 +140,12 @@ export default function Transacoes() {
   return (
     <TemplateMenu2 className={classes.root}>
       <MaterialTable
-        title={<AddIcon>Transacoes</AddIcon>}
+        title={
+          <Typography gutterBottom variant="h6" component="h3">
+            <SwapHorizontalCircleIcon />
+            Transações
+          </Typography>
+        }
         icons={tableIcons}
         columns={state.columns}
         data={state.data}
@@ -163,7 +171,7 @@ export default function Transacoes() {
         ]}
         onRowClick={(event, rowData, togglePanel) => togglePanel()}
       />
-      <Fab className={classes.fab}>
+      <Fab className={classes.fab} component={Link} to="/transacao">
         <AddIcon />
       </Fab>
     </TemplateMenu2>

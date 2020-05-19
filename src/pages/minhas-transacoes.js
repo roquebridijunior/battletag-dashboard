@@ -24,7 +24,6 @@ export default function MinhasTransacoes() {
   const [state, setState] = React.useState({
     columns: [
       { title: "ID", field: "id", type: "numeric" },
-      { title: "Conta", field: "conta" },
       { title: "Data", field: "data", type: "date" },
       {
         title: "BattleTag Ammo",
@@ -36,21 +35,18 @@ export default function MinhasTransacoes() {
     data: [
       {
         id: 731983,
-        conta: "joaquim@joca.com.br",
         data: 31231,
         battletag_ammo: 63,
         tipo_transacao: "Bonificação"
       },
       {
         id: 773861,
-        conta: "manuel@santos.com.br",
         data: 3123,
         battletag_ammo: 34,
         tipo_transacao: "Compra"
       },
       {
         id: 129387,
-        conta: "manuel@santos.com.br",
         data: 3123,
         battletag_ammo: -34,
         tipo_transacao: "Uso"
