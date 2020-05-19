@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-//import TemplateMenu from "../templates/template-menu.js";
 import TemplateMenu2 from "../templates/template-menu2.js";
 import { Link } from "react-router-dom";
 
@@ -13,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2)
   },
   grid: {
-    padding:  theme.spacing(2)
+    padding: theme.spacing(2)
   }
 }));
 
@@ -28,9 +27,7 @@ export default function Painel() {
             <Typography gutterBottom variant="h5" component="h2">
               Pacote Soldado
             </Typography>
-            <Typography component="p">
-              100 BatteTag Ammo por R$ 1,00
-            </Typography>
+            <Typography component="p">100 BatteTag Ammo por R$ 1,00</Typography>
             <Button variant="contained" component={Link} to="/compra/1">
               Comprar
             </Button>
@@ -55,7 +52,7 @@ export default function Painel() {
               Pacote Tenente
             </Typography>
             <Typography component="p">
-            10.000 BatteTag Ammo por R$ 95,00
+              10.000 BatteTag Ammo por R$ 95,00
             </Typography>
             <Button variant="contained" component={Link} to="/compra/3">
               Comprar

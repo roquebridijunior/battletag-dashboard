@@ -10,10 +10,12 @@ import AndroidOutlinedIcon from "@material-ui/icons/AndroidOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 
 import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
+import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -36,26 +38,41 @@ export default function Transacao() {
             <CardActionArea>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
-                  Transacao
+                  <SwapHorizIcon />
+                  Transação
                 </Typography>
                 <Typography variant="body2" component="p">
-                  Faça uma nova transação
+                  Nova transação
                 </Typography>
 
                 <form autoComplete="off">
-                  <FormControl required className={classes.formControl}>
-                    <InputLabel id="tipo-transacao">Tipo Transação</InputLabel>
+                  <FormControl
+                    fullWidth
+                    required
+                    className={classes.formControl}
+                  >
+                    <InputLabel id="tipo-transacao">
+                      Tipo da Transação
+                    </InputLabel>
                     <Select
                       labelId="tipo-transacao"
                       id="tipo-transacao"
                       value={tipo_transacao}
                     >
-                      <MenuItem value="bonificado">Bonificado</MenuItem>
+                      <MenuItem value="bonificado">Bonificação</MenuItem>
                     </Select>
                   </FormControl>
-
-                  <FormControl required className={classes.formControl}>
-                    <TextField id="battletag-ammo" label="BattleTag Ammo" />
+                  <br />
+                  <FormControl
+                    fullWidth
+                    required
+                    className={classes.formControl}
+                  >
+                    <TextField
+                      id="battletag-ammo"
+                      label="BattleTag Ammo"
+                      helperText="Quantidade de BattleTag Ammo que será transacionado"
+                    />
                   </FormControl>
 
                   <Button
@@ -63,9 +80,8 @@ export default function Transacao() {
                     className={classes.button}
                     size="large"
                     variant="contained"
-                    startIcon={<AndroidOutlinedIcon />}
                   >
-                    Cadastrar
+                    Transacionar
                   </Button>
                 </form>
               </CardContent>

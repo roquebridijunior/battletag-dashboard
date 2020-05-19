@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
@@ -61,6 +62,7 @@ export default function TemplateMenu2(props) {
 
   return (
     <div>
+      <CssBaseline />
       <React.Fragment>
         <Drawer open={state} onClose={toggleDrawer(false)}>
           <div
