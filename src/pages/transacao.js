@@ -6,29 +6,56 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import AndroidOutlinedIcon from "@material-ui/icons/AndroidOutlined";
-import { makeStyles } from "@material-ui/core/styles";
+import { useFormik } from "formik";
 
+import DialogActions from "@material-ui/core/DialogActions";
 import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 
-const useStyles = makeStyles(theme => ({
-  button: {
-    margin: theme.spacing(3, 0, 0)
-  },
-  secondary: {
-    margin: theme.spacing(3, 0, 0)
-  }
-}));
-
 export default function Transacao() {
-  const classes = useStyles();
   const [tipo_transacao, setAge] = React.useState("");
+
+  const validate = values => {
+    const errors = {};
+    if (!values.conta_destino) {
+      errors.conta_destino = "Campo obrigatório";
+    } else if (values.conta_destino.length > 15) {
+      errors.conta_destino = "Must be 15 characters or less";
+    }
+
+    if (!values.battletag_ammo) {
+      errors.battletag_ammo = "Campo obrigatório";
+    } else if (values.battletag_ammo.value > 0) {
+      errors.battletag_ammo =
+        "A quantidade de BattleTag Ammo precisa ser maior que 0";
+    }
+
+    if (!values.email) {
+      errors.email = "Campo obrigatório";
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+      errors.email = "Invalid email address";
+    }
+
+    return errors;
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      battletag_ammo: "0",
+      tipo_transacao: "bonificado",
+      conta_destino: ""
+    },
+    validate,
+    onSubmit: values => {
+      alert(JSON.stringify(values, null, 2));
+    }
+  });
 
   return (
     <TemplateMenu2>
@@ -39,50 +66,60 @@ export default function Transacao() {
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   <SwapHorizIcon />
-                  Transação
+                  Transações
                 </Typography>
                 <Typography variant="body2" component="p">
                   Nova transação
                 </Typography>
 
-                <form autoComplete="off">
-                  <FormControl
-                    fullWidth
-                    required
-                    className={classes.formControl}
-                  >
-                    <InputLabel id="tipo-transacao">
+                <form onSubmit={formik.handleSubmit}>
+                  <FormControl fullWidth required>
+                    <TextField
+                      required
+                      id="conta_destino"
+                      label="Conta de destino"
+                      helperText="Conta de destino que será efetuada a transação"
+                      onChange={formik.handleChange}
+                      value={formik.values.conta}
+                    />
+                  </FormControl>
+                  <FormControl fullWidth required>
+                    <InputLabel id="tipo_transacao">
                       Tipo da Transação
                     </InputLabel>
                     <Select
-                      labelId="tipo-transacao"
-                      id="tipo-transacao"
+                      labelId="tipo_transacao"
+                      id="tipo_transacao"
                       value={tipo_transacao}
                     >
                       <MenuItem value="bonificado">Bonificação</MenuItem>
                     </Select>
                   </FormControl>
                   <br />
-                  <FormControl
-                    fullWidth
-                    required
-                    className={classes.formControl}
-                  >
+                  <FormControl fullWidth>
                     <TextField
-                      id="battletag-ammo"
+                      required
+                      id="battletag_ammo"
                       label="BattleTag Ammo"
                       helperText="Quantidade de BattleTag Ammo que será transacionado"
+                      onChange={formik.handleChange}
+                      value={formik.values.battletag_ammo}
                     />
                   </FormControl>
 
-                  <Button
-                    fullWidth
-                    className={classes.button}
-                    size="large"
-                    variant="contained"
-                  >
-                    Transacionar
-                  </Button>
+                  <DialogActions>
+                    <Button
+                      type="button"
+                      className="outline"
+                      //onClick={handleReset}
+                      //disabled={!dirty || isSubmitting}
+                    >
+                      Limpar
+                    </Button>
+                    <Button variant="contained" type="submit">
+                      Transacionar
+                    </Button>
+                  </DialogActions>
                 </form>
               </CardContent>
             </CardActionArea>
