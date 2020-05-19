@@ -1,6 +1,6 @@
 import React from "react";
 import MaterialTable from "material-table";
-import TemplateMenu from "../templates/template-menu.js";
+import TemplateMenu2 from "../templates/template-menu2.js";
 import Fab from "@material-ui/core/Fab";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
@@ -125,7 +125,7 @@ export default function Chamados() {
   };
 
   return (
-    <TemplateMenu>
+    <TemplateMenu2>
       <MaterialTable
         title="Chamados"
         icons={tableIcons}
@@ -156,6 +156,6 @@ export default function Chamados() {
       <Fab className={classes.fab}>
         <AddIcon />
       </Fab>
-    </TemplateMenu>
+    </TemplateMenu2>
   );
 }

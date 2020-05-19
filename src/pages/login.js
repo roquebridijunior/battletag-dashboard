@@ -1,5 +1,5 @@
 import React from "react";
-import TemplateMenu from "../templates/template-menu.js";
+import TemplateMenu2 from "../templates/template-menu2.js";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 export default function Login() {
   const classes = useStyles();
   return (
-    <TemplateMenu>
+    <TemplateMenu2>
       <Grid container justify="center">
         <Grid item xs={12} sm={8} md={5} lg={4} xl={3}>
           <Card>
@@ -88,6 +88,6 @@ export default function Login() {
           </Card>
         </Grid>
       </Grid>
-    </TemplateMenu>
+    </TemplateMenu2>
   );
 }

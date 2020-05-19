@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import TemplateMenu from "../templates/template-menu.js";
+import TemplateMenu2 from "../templates/template-menu2.js";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -84,7 +84,7 @@ export default function Compra() {
   };
 
   return (
-    <TemplateMenu>
+    <TemplateMenu2>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.root}>
@@ -155,6 +155,6 @@ export default function Compra() {
           </Paper>
         </Grid>
       </Grid>
-    </TemplateMenu>
+    </TemplateMenu2>
   );
 }

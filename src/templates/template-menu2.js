@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -26,7 +25,20 @@ import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
 import ReceiptOutlinedIcon from "@material-ui/icons/ReceiptOutlined";
 import BarChartIcon from "@material-ui/icons/BarChart";
 
+const useStyles = makeStyles(theme => ({
+  toolbarTitle: {
+    flexGrow: 1
+  },
+  brandName: {
+    padding: theme.spacing(2),
+  },
+  body: {
+    paddingTop: theme.spacing(7),
+  }
+}));
+
 export default function TemplateMenu2(props) {
+  const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = event => {
@@ -53,7 +65,8 @@ export default function TemplateMenu2(props) {
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
           >
-            <Typography variant="h5" component="h2">
+            <Typography variant="h5" component="h2"
+             className={classes.brandName}>
               BATTLETAG
             </Typography>
             <Divider />
@@ -118,6 +131,7 @@ export default function TemplateMenu2(props) {
             variant="h6"
             color="inherit"
             noWrap
+            className={classes.toolbarTitle}
           >
             Painel 
           </Typography>
@@ -146,7 +160,9 @@ export default function TemplateMenu2(props) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      {props.children}
+      <div className={classes.body}>
+        {props.children}
+      </div>
     </div>
   );
 }

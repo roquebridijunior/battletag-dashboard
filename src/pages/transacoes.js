@@ -1,6 +1,6 @@
 import React from "react";
 import MaterialTable from "material-table";
-import TemplateMenu from "../templates/template-menu.js";
+import TemplateMenu2 from "../templates/template-menu2.js";
 import Fab from "@material-ui/core/Fab";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -135,7 +135,7 @@ export default function Transacoes() {
   const classes = useStyles();
 
   return (
-    <TemplateMenu className={classes.root}>
+    <TemplateMenu2 className={classes.root}>
       <MaterialTable
         title={<AddIcon>Transacoes</AddIcon>}
         icons={tableIcons}
@@ -166,6 +166,6 @@ export default function Transacoes() {
       <Fab className={classes.fab}>
         <AddIcon />
       </Fab>
-    </TemplateMenu>
+    </TemplateMenu2>
   );
 }

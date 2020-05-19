@@ -1,6 +1,6 @@
 import React from "react";
 import MaterialTable from "material-table";
-import TemplateMenu from "../templates/template-menu.js";
+import TemplateMenu2 from "../templates/template-menu2.js";
 
 import { forwardRef } from "react";
 
@@ -116,7 +116,7 @@ export default function MinhasTransacoes() {
   };
 
   return (
-    <TemplateMenu>
+    <TemplateMenu2>
       <MaterialTable
         title="Minhas Transações"
         icons={tableIcons}
@@ -144,6 +144,6 @@ export default function MinhasTransacoes() {
         ]}
         onRowClick={(event, rowData, togglePanel) => togglePanel()}
       />
-    </TemplateMenu>
+    </TemplateMenu2>
   );
 }

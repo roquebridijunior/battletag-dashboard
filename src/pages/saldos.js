@@ -1,6 +1,6 @@
 import React from "react";
-import TemplateMenu from "../templates/template-menu.js";
+import TemplateMenu2 from "../templates/template-menu2.js";
 
 export default function Saldos() {
-  return <TemplateMenu>Saldos</TemplateMenu>;
+  return <TemplateMenu2>Saldos</TemplateMenu2>;
 }
