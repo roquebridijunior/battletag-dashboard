@@ -33,22 +33,36 @@ export default function Chamados() {
       {
         id: 2351,
         conta: "joaquim@joca.com.br",
-        data: 31231,
+        data: "2020-05-24T10:30",
         topico: "Compras",
         status: "Aberto"
       },
       {
         id: 4614,
         conta: "manuel@santos.com.br",
-        data: 3123,
+        data: "2020-05-24T10:30",
         topico: "Dúvida",
         status: "Aberto"
       },
       {
         id: 6345,
         conta: "manuel@santos.com.br",
-        data: 3123,
+        data: "2020-05-24T10:30",
         topico: "Reclamação",
+        status: "Fechado"
+      },
+      {
+        id: 102938,
+        conta: "joaquim@manoel.com.br",
+        data: "2020-05-24T10:30",
+        topico: "Dúvida",
+        status: "Fechado"
+      },
+      {
+        id: 14893,
+        conta: "manoel@joaquim.com.br",
+        data: "2020-05-24T10:30",
+        topico: "Dúvida",
         status: "Fechado"
       }
     ]
@@ -111,6 +125,25 @@ export default function Chamados() {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
 
+  const detailPanel = [
+    {
+      tooltip: "Show Name",
+      render: rowData => {
+        return (
+          <div
+            style={{
+              fontSize: 100,
+              textAlign: "center",
+              color: "white"
+            }}
+          >
+            TESTE - {rowData.id}
+          </div>
+        );
+      }
+    }
+  ];
+
   return (
     <TemplateMenu2>
       <MaterialTable
@@ -119,25 +152,7 @@ export default function Chamados() {
         columns={state.columns}
         data={state.data}
         localization={localization}
-        detailPanel={[
-          {
-            tooltip: "Show Name",
-            render: rowData => {
-              return (
-                <div
-                  style={{
-                    fontSize: 100,
-                    textAlign: "center",
-                    color: "white",
-                    backgroundColor: "#43A047"
-                  }}
-                >
-                  TESTE - {rowData.name}
-                </div>
-              );
-            }
-          }
-        ]}
+        detailPanel={detailPanel}
         onRowClick={(event, rowData, togglePanel) => togglePanel()}
       />
     </TemplateMenu2>

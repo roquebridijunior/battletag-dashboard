@@ -43,21 +43,21 @@ export default function Transacoes() {
       {
         id: 731983,
         conta: "joaquim@joca.com.br",
-        data: 31231,
+        data: "2020-05-24T10:30",
         battletag_ammo: 63,
         tipo_transacao: "Bonificação"
       },
       {
         id: 773861,
         conta: "manuel@santos.com.br",
-        data: 3123,
+        data: "2020-04-14T10:30",
         battletag_ammo: 34,
         tipo_transacao: "Compra"
       },
       {
         id: 129387,
         conta: "manuel@santos.com.br",
-        data: 3123,
+        data: "2020-05-26T10:30",
         battletag_ammo: -34,
         tipo_transacao: "Uso"
       }

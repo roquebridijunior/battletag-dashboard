@@ -46,21 +46,54 @@ export default function MinhasTransacoes() {
     data: [
       {
         id: 731983,
-        data: 31231,
+        data: "2020-05-24T10:30",
         battletag_ammo: 63,
-        tipo_transacao: "Bonificação"
+        tipo_transacao: "bonificacao"
       },
       {
         id: 773861,
-        data: 3123,
-        battletag_ammo: 34,
-        tipo_transacao: "Compra"
+        data: "2017-05-24T10:30",
+        battletag_ammo: 100,
+        tipo_transacao: "compra",
+        compra: {
+          adquirente: "paypal",
+          meio_pagamento: "cartao",
+          cartao: {
+            portador: "JOAQUIM DA SILVA",
+            bandeira: "visa",
+            numero: "1234 ****** 223"
+          },
+          autorizacao: 1231231,
+          parcelas: "1",
+          moeda: "BRL",
+          valor: "100,00"
+        }
       },
       {
         id: 129387,
-        data: 3123,
+        data: "2017-05-24T10:30",
         battletag_ammo: -34,
-        tipo_transacao: "Uso"
+        tipo_transacao: "uso"
+      },
+      {
+        id: 129387,
+        data: "2017-05-24T10:30",
+        battletag_ammo: 10000,
+        tipo_transacao: "compra",
+        compra: {
+          adquirente: "mercadopago",
+          meio_pagamento: "boleto",
+          boleto: {
+            portador: "JOAQUIM DA SILVA",
+            cpf: "000.111.222-44",
+            numero: "10322 231231233 123123213 123 231231321",
+            vencimento: "2020-05-24",
+            dt_pagamento: "2020-05-26"
+          },
+          parcelas: "1",
+          moeda: "BRL",
+          valor: "100,00"
+        }
       }
     ]
   });
@@ -122,6 +155,25 @@ export default function MinhasTransacoes() {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
 
+  const detailPanel = [
+    {
+      tooltip: "Detalhes",
+      render: rowData => {
+        return (
+          <div className={classes.grid}>
+            Adquirente: {rowData.compra.adquirente}
+            Meio de Pagamento: {rowData.compra.meio_pagamento}
+            Bandeira: {rowData.compra.bandeira}
+            Número: {rowData.compra.numero}
+            Parcelas: {rowData.compra.parcelas}
+            Moeda: {rowData.compra.moeda}
+            Valor: {rowData.compra.valor}
+          </div>
+        );
+      }
+    }
+  ];
+
   return (
     <TemplateMenu2>
       <Grid container className={classes.grid} justify="center">
@@ -137,25 +189,7 @@ export default function MinhasTransacoes() {
             columns={state.columns}
             data={state.data}
             localization={localization}
-            detailPanel={[
-              {
-                tooltip: "Show Name",
-                render: rowData => {
-                  return (
-                    <div
-                      style={{
-                        fontSize: 100,
-                        textAlign: "center",
-                        color: "white",
-                        backgroundColor: "#43A047"
-                      }}
-                    >
-                      TESTE - {rowData.name}
-                    </div>
-                  );
-                }
-              }
-            ]}
+            detailPanel={detailPanel}
             onRowClick={(event, rowData, togglePanel) => togglePanel()}
           />
         </Grid>
