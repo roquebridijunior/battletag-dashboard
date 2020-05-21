@@ -2,7 +2,7 @@ import React from "react";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 
-export default function TableRowOperacao(props) {
+export default function TableRowPatrocinador(props) {
   return (
     <React.Fragment>
       <TableRow>
