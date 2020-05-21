@@ -7,7 +7,7 @@ export default function TableRowOperacao(props) {
     <React.Fragment>
       <TableRow>
         <TableCell component="th" scope="row">
-          Patrocinador
+          Operação
         </TableCell>
         <TableCell>
           {props.id} - {props.nome}

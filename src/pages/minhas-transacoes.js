@@ -6,6 +6,7 @@ import TableRowBonificacao from "../components/transacao/tablerow-bonificacao.js
 import TableRowCartao from "../components/transacao/tablerow-cartao.js";
 import TableRowBoleto from "../components/transacao/tablerow-boleto.js";
 import TableRowUso from "../components/transacao/tablerow-uso.js";
+import TableRowCompra from "../components/transacao/tablerow-compra.js";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -105,8 +106,8 @@ export default function MinhasTransacoes() {
       battletag_ammo: -100,
       tipo_transacao: "uso",
       uso: {
-        acao: "adicao_patrocinio",
-        adicao_patrocinio: {
+        acao: "adicao_patrocinador",
+        adicao_patrocinador: {
           operacao: {
             id: 525,
             nome: "Operação Círculo de Fogo"
@@ -197,73 +198,6 @@ export default function MinhasTransacoes() {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
 
-  const compra = compra => (
-    <React.Fragment>
-      <TableRow>
-        <TableCell component="th" scope="row">
-          Adquirente
-        </TableCell>
-        <TableCell>{compra.adquirente}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell component="th" scope="row">
-          Meio de Pagamento
-        </TableCell>
-        <TableCell>{compra.meio_pagamento}</TableCell>
-      </TableRow>
-      {getDetalheMeioPagamento(compra)}
-      <TableRow>
-        <TableCell component="th" scope="row">
-          Autorizacao
-        </TableCell>
-        <TableCell>{compra.autorizacao}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell component="th" scope="row">
-          Parcelas
-        </TableCell>
-        <TableCell>{compra.parcelas}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell component="th" scope="row">
-          Moeda
-        </TableCell>
-        <TableCell>{compra.moeda}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell component="th" scope="row">
-          Valor
-        </TableCell>
-        <TableCell>{compra.valor}</TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
-
-  const getDetalheMeioPagamento = compra => {
-    switch (compra.meio_pagamento) {
-      case "cartao":
-        return (
-          <TableRowCartao
-            portador={compra.cartao.portador}
-            bandeira={compra.cartao.bandeira}
-            numero={compra.cartao.numero}
-          />
-        );
-      case "boleto":
-        return (
-          <TableRowBoleto
-            portador={compra.boleto.portador}
-            cpf={compra.boleto.cpf}
-            numero={compra.boleto.numero}
-            dt_vencimento={compra.boleto.dt_vencimento}
-            dt_pagamento={compra.boleto.dt_pagamento}
-          />
-        );
-      default:
-        return "";
-    }
-  };
-
   const getDetalheTransacao = transacao => {
     switch (transacao.tipo_transacao) {
       case "bonificacao":
@@ -271,9 +205,26 @@ export default function MinhasTransacoes() {
           <TableRowBonificacao campanha={transacao.bonificacao.campanha} />
         );
       case "uso":
-        return <TableRowUso acao={transacao.uso.acao} />;
+        return (
+          <TableRowUso
+            acao={transacao.uso.acao}
+            adicao_operador={transacao.uso.adicao_operador}
+            adicao_patrocinador={transacao.uso.adicao_patrocinador}
+          />
+        );
       case "compra":
-        return compra(transacao.compra);
+        return (
+          <TableRowCompra
+            adquirente={transacao.compra.adquirente}
+            meio_pagamento={transacao.compra.meio_pagamento}
+            boleto={transacao.compra.boleto}
+            cartao={transacao.compra.cartao}
+            autorizacao={transacao.compra.autorizacao}
+            parcela={transacao.compra.parcela}
+            moeda={transacao.compra.moeda}
+            valor={transacao.compra.valor}
+          />
+        );
       default:
         return "";
     }

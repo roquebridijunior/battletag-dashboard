@@ -6,11 +6,11 @@ import TableRowAdicaoOperador from "./tablerow-adicao_operador.js";
 
 const getDetalheAcao = uso => {
   switch (uso.acao) {
-    case "adicao_patrocinio":
+    case "adicao_patrocinador":
       return (
         <TableRowAdicaoPatrocinador
-          operacao={uso.adicao_patrocinio.operacao}
-          patrocinador={uso.adicao_patrocinio.patrocinador}
+          operacao={uso.adicao_patrocinador.operacao}
+          patrocinador={uso.adicao_patrocinador.patrocinador}
         />
       );
     case "adicao_operador":
