@@ -27,13 +27,21 @@ export default function TableRowBoleto(props) {
         <TableCell component="th" scope="row">
           Data Vencimento
         </TableCell>
-        <TableCell>{props.dt_vencimento}</TableCell>
+        <TableCell>
+          {new Intl.DateTimeFormat("pt-BR").format(
+            Date.parse(props.dt_vencimento)
+          )}
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell component="th" scope="row">
           Data Pagamento
         </TableCell>
-        <TableCell>{props.dt_pagamento}</TableCell>
+        <TableCell>
+          {new Intl.DateTimeFormat("pt-BR").format(
+            Date.parse(props.dt_pagamento)
+          )}
+        </TableCell>
       </TableRow>
     </React.Fragment>
   );

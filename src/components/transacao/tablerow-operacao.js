@@ -1,6 +1,7 @@
 import React from "react";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import Link from "@material-ui/core/Link";
 
 export default function TableRowOperacao(props) {
   return (
@@ -10,7 +11,7 @@ export default function TableRowOperacao(props) {
           Operação
         </TableCell>
         <TableCell>
-          {props.id} - {props.nome}
+          <Link href="/operacao/{props.id}">{props.nome}</Link>
         </TableCell>
       </TableRow>
     </React.Fragment>

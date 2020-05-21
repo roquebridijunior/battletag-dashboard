@@ -3,8 +3,6 @@ import { forwardRef } from "react";
 import MaterialTable from "material-table";
 import TemplateMenu2 from "../templates/template-menu2.js";
 import TableRowBonificacao from "../components/transacao/tablerow-bonificacao.js";
-import TableRowCartao from "../components/transacao/tablerow-cartao.js";
-import TableRowBoleto from "../components/transacao/tablerow-boleto.js";
 import TableRowUso from "../components/transacao/tablerow-uso.js";
 import TableRowCompra from "../components/transacao/tablerow-compra.js";
 import { makeStyles } from "@material-ui/core/styles";
@@ -13,9 +11,7 @@ import Grid from "@material-ui/core/Grid";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-import TableRow from "@material-ui/core/TableRow";
 
 import AddBox from "@material-ui/icons/AddBox";
 import Search from "@material-ui/icons/Search";

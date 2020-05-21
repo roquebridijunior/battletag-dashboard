@@ -3,6 +3,10 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TableRowCartao from "./tablerow-cartao.js";
 import TableRowBoleto from "./tablerow-boleto.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
+import { faPaypal } from "@fortawesome/free-brands-svg-icons";
+import { faBarcode } from "@fortawesome/free-solid-svg-icons";
 
 const getDetalheMeioPagamento = compra => {
   switch (compra.meio_pagamento) {
@@ -29,6 +33,40 @@ const getDetalheMeioPagamento = compra => {
   }
 };
 
+const getAdquirente = adquirente => {
+  switch (adquirente) {
+    case "paypal":
+      return (
+        <React.Fragment>
+          <FontAwesomeIcon icon={faPaypal} /> Paypal
+        </React.Fragment>
+      );
+    case "mercadopago":
+      return <React.Fragment>Mercado Pago</React.Fragment>;
+    default:
+      return adquirente;
+  }
+};
+
+const getMeioPagamento = meio_pagamento => {
+  switch (meio_pagamento) {
+    case "cartao":
+      return (
+        <React.Fragment>
+          <FontAwesomeIcon icon={faCreditCard} /> Cartão
+        </React.Fragment>
+      );
+    case "boleto":
+      return (
+        <React.Fragment>
+          <FontAwesomeIcon icon={faBarcode} /> Boleto
+        </React.Fragment>
+      );
+    default:
+      return meio_pagamento;
+  }
+};
+
 export default function TableRowCompra(props) {
   return (
     <React.Fragment>
@@ -36,13 +74,13 @@ export default function TableRowCompra(props) {
         <TableCell component="th" scope="row">
           Adquirente
         </TableCell>
-        <TableCell>{props.adquirente}</TableCell>
+        <TableCell>{getAdquirente(props.adquirente)}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell component="th" scope="row">
           Meio de Pagamento
         </TableCell>
-        <TableCell>{props.meio_pagamento}</TableCell>
+        <TableCell>{getMeioPagamento(props.meio_pagamento)}</TableCell>
       </TableRow>
       {getDetalheMeioPagamento(props)}
       <TableRow>
@@ -61,13 +99,12 @@ export default function TableRowCompra(props) {
         <TableCell component="th" scope="row">
           Moeda
         </TableCell>
-        <TableCell>{props.moeda}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell component="th" scope="row">
-          Valor
+        <TableCell>
+          {new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: props.moeda
+          }).format(parseFloat(props.valor))}
         </TableCell>
-        <TableCell>{props.valor}</TableCell>
       </TableRow>
     </React.Fragment>
   );
