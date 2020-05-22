@@ -11,7 +11,9 @@ export default function TableRowPatrocinador(props) {
           Patrocinador
         </TableCell>
         <TableCell>
-          <Link href="/patrocinador/{props.id}">{props.nome}</Link>
+          <Link color="secondary" href="/patrocinador/{props.id}">
+            {props.nome}
+          </Link>
         </TableCell>
       </TableRow>
     </React.Fragment>

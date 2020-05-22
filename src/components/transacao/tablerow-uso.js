@@ -25,6 +25,17 @@ const getDetalheAcao = uso => {
   }
 };
 
+const getAcao = acao => {
+  switch (acao) {
+    case "adicao_patrocinador":
+      return "Adição de Patrocinador em Operação";
+    case "adicao_operador":
+      return "Incremento do limite de Operadores em Operação";
+    default:
+      return acao;
+  }
+};
+
 export default function TableRowUso(props) {
   return (
     <React.Fragment>
@@ -32,7 +43,7 @@ export default function TableRowUso(props) {
         <TableCell component="th" scope="row">
           Ação
         </TableCell>
-        <TableCell>{props.acao}</TableCell>
+        <TableCell>{getAcao(props.acao)}</TableCell>
       </TableRow>
       {getDetalheAcao(props)}
     </React.Fragment>

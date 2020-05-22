@@ -11,7 +11,9 @@ export default function TableRowOperacao(props) {
           Operação
         </TableCell>
         <TableCell>
-          <Link href="/operacao/{props.id}">{props.nome}</Link>
+          <Link color="secondary" href="/operacao/{props.id}">
+            {props.nome}
+          </Link>
         </TableCell>
       </TableRow>
     </React.Fragment>

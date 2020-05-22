@@ -29,7 +29,7 @@ const getDetalheMeioPagamento = compra => {
         />
       );
     default:
-      return "";
+      return compra.meio_pagamento;
   }
 };
 

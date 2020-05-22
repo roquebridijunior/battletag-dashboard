@@ -13,14 +13,21 @@ import Pacotes from "./pages/pacotes.js";
 import Compra from "./pages/compra.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import red from "@material-ui/core/colors/red";
+import green from "@material-ui/core/colors/green";
+import deepOrange from "@material-ui/core/colors/deepOrange";
+import grey from "@material-ui/core/colors/grey";
 
 import GunPlayWoff2 from "./assets/fonts/gunplay_rg-webfont.woff2";
 import GunPlayWoff from "./assets/fonts/gunplay_rg-webfont.woff";
 
 const theme = createMuiTheme({
   palette: {
-    primary: { main: "#212121", contrastText: "#ffffff" },
-    secondary: { main: "#263238", contrastText: "#ffffff" },
+    primary: { main: grey[900] },
+    secondary: { main: grey[500] },
+    error: { main: red[500] },
+    success: { main: green[500] },
+    warning: { main: deepOrange[500] },
     type: "dark"
   },
   typography: {

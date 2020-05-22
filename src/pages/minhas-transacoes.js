@@ -36,6 +36,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const getTipoTransacao = tipo_transacao => {
+  switch (tipo_transacao) {
+    case "compra":
+      return "Compra";
+    case "uso":
+      return "Uso";
+    case "bonificacao":
+      return "Bonificação";
+    default:
+      return tipo_transacao;
+  }
+};
+
+const getBattleTagAmmo = battletag_ammo => {
+  if (battletag_ammo > 0) {
+    return <span color="success.main">{battletag_ammo}</span>;
+  } else {
+    return <span color="error.main"> (menos) {battletag_ammo}</span>;
+  }
+};
+
 export default function MinhasTransacoes() {
   const classes = useStyles();
 
@@ -45,10 +66,14 @@ export default function MinhasTransacoes() {
     {
       title: "BattleTag Ammo",
       field: "battletag_ammo",
-      type: "numeric"
-      //render: rowData => <img src={rowData.imageUrl} />
+      type: "numeric",
+      render: rowData => getBattleTagAmmo(rowData.battletag_ammo)
     },
-    { title: "Tipo Transação", field: "tipo_transacao" }
+    {
+      title: "Tipo Transação",
+      field: "tipo_transacao",
+      render: rowData => getTipoTransacao(rowData.tipo_transacao)
+    }
   ];
 
   const data = [
@@ -97,7 +122,7 @@ export default function MinhasTransacoes() {
       }
     },
     {
-      id: 129387,
+      id: 42134,
       data: "2017-03-14T10:30",
       battletag_ammo: -100,
       tipo_transacao: "uso",
@@ -116,7 +141,7 @@ export default function MinhasTransacoes() {
       }
     },
     {
-      id: 129387,
+      id: 67334,
       data: "2017-05-24T10:30",
       battletag_ammo: 10000,
       tipo_transacao: "compra",
@@ -216,7 +241,7 @@ export default function MinhasTransacoes() {
             boleto={transacao.compra.boleto}
             cartao={transacao.compra.cartao}
             autorizacao={transacao.compra.autorizacao}
-            parcela={transacao.compra.parcela}
+            parcelas={transacao.compra.parcelas}
             moeda={transacao.compra.moeda}
             valor={transacao.compra.valor}
           />
