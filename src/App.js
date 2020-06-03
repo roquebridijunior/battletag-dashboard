@@ -24,9 +24,9 @@ import GunPlayWoff from "./assets/fonts/gunplay_rg-webfont.woff";
 const theme = createMuiTheme({
   palette: {
     primary: { main: grey[900] },
-    secondary: { main: grey[500] },
-    error: { main: red[500] },
-    success: { main: green[500] },
+    secondary: { main: grey[400] },
+    error: { main: red[400] },
+    success: { main: green[400] },
     warning: { main: deepOrange[500] },
     type: "dark"
   },
@@ -54,22 +54,58 @@ const theme = createMuiTheme({
 });
 
 export default function App() {
+  const [menuState, setMenuState] = React.useState(false);
+
+  const toggleMenu = state => event => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setMenuState(state);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Switch>
-          <Route component={Painel} exact path="/" />
-          <Route component={Pacotes} exact path="/pacotes" />
-          <Route component={Painel} exact path="/painel" />
-          <Route component={MeusChamados} exact path="/meus-chamados" />
-          <Route path="/minhas-transacoes" exact component={MinhasTransacoes} />
-          <Route path="/saldos" exact component={Saldos} />
-          <Route path="/transacao" exact component={Transacao} />
-          <Route path="/transacoes" exact component={Transacoes} />
-          <Route path="/chamado" exact component={Chamado} />
-          <Route path="/chamados" exact component={Chamados} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/compra/:compraId" exact component={Compra} />
+          <Route exact path="/">
+            <Painel menuState={menuState} setMenuState={toggleMenu} />
+          </Route>
+          <Route exact path="/pacotes">
+            <Pacotes menuState={menuState} setMenuState={toggleMenu} />
+          </Route>
+          <Route exact path="/painel">
+            <Painel menuState={menuState} setMenuState={toggleMenu} />
+          </Route>
+          <Route exact path="/meus-chamados">
+            <MeusChamados menuState={menuState} setMenuState={toggleMenu} />
+          </Route>
+          <Route path="/minhas-transacoes" exact>
+            <MinhasTransacoes menuState={menuState} setMenuState={toggleMenu} />
+          </Route>
+          <Route path="/saldos" exact>
+            <Saldos menuState={menuState} setMenuState={toggleMenu} />
+          </Route>
+          <Route path="/transacao" exact>
+            <Transacao menuState={menuState} setMenuState={toggleMenu} />
+          </Route>
+          <Route path="/transacoes" exact>
+            <Transacoes menuState={menuState} setMenuState={toggleMenu} />
+          </Route>
+          <Route path="/chamado" exact>
+            <Chamado menuState={menuState} setMenuState={toggleMenu} />
+          </Route>
+          <Route path="/chamados" exact>
+            <Chamados menuState={menuState} setMenuState={toggleMenu} />
+          </Route>
+          <Route path="/login" exact>
+            <Login menuState={menuState} setMenuState={toggleMenu} />
+          </Route>
+          <Route path="/compra/:compraId" exact>
+            <Compra menuState={menuState} setMenuState={toggleMenu} />
+          </Route>
         </Switch>
       </Router>
     </ThemeProvider>

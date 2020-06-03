@@ -1,291 +1,602 @@
 import React from "react";
-import { forwardRef } from "react";
-import MaterialTable from "material-table";
-import TemplateMenu2 from "../templates/template-menu2.js";
-import TableRowBonificacao from "../components/transacao/tablerow-bonificacao.js";
-import TableRowUso from "../components/transacao/tablerow-uso.js";
-import TableRowCompra from "../components/transacao/tablerow-compra.js";
+import DateFnsUtils from "@date-io/date-fns";
+import TemplateMenu from "../templates/template-menu3.js";
 import { makeStyles } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Drawer from "@material-ui/core/Drawer";
+import Checkbox from "@material-ui/core/Checkbox";
+import Radio from "@material-ui/core/Radio";
+import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from "@material-ui/pickers";
+import SvgIcon from "@material-ui/core/SvgIcon";
+import Box from "@material-ui/core/Box";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableContainer from "@material-ui/core/TableContainer";
-
-import AddBox from "@material-ui/icons/AddBox";
-import Search from "@material-ui/icons/Search";
-import ViewColumn from "@material-ui/icons/ViewColumn";
-import SaveAlt from "@material-ui/icons/SaveAlt";
-import ChevronLeft from "@material-ui/icons/ChevronLeft";
-import ChevronRight from "@material-ui/icons/ChevronRight";
-import FirstPage from "@material-ui/icons/FirstPage";
-import LastPage from "@material-ui/icons/LastPage";
-import Check from "@material-ui/icons/Check";
-import FilterList from "@material-ui/icons/FilterList";
-import Remove from "@material-ui/icons/Remove";
-import Edit from "@material-ui/icons/Edit";
-import Clear from "@material-ui/icons/Clear";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
-import ArrowDownward from "@material-ui/icons/ArrowDownward";
-import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
+import SearchIcon from "@material-ui/icons/Search";
+import FilterListIcon from "@material-ui/icons/FilterList";
+import MenuIcon from "@material-ui/icons/Menu";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles(theme => ({
+  menu: {
+    [theme.breakpoints.down("xs")]: {
+      display: onsearch => (onsearch === true ? "none" : "flex")
+    },
+    [theme.breakpoints.up("sm")]: {
+      display: "flex"
+    }
+  },
+
+  titulo: {
+    flexGrow: 1,
+    [theme.breakpoints.down("xs")]: {
+      display: onsearch => (onsearch === true ? "none" : "flex")
+    },
+    [theme.breakpoints.up("sm")]: {
+      display: "flex"
+    }
+  },
+
+  searchicon: {
+    [theme.breakpoints.down("xs")]: {
+      display: "none"
+    },
+    [theme.breakpoints.up("sm")]: {
+      display: onsearch => (onsearch === true ? "none" : "flex")
+    }
+  },
+
+  filtericon: {
+    [theme.breakpoints.down("xs")]: {
+      display: "none"
+    }
+  },
+
+  searchinput: {
+    display: onsearch => (onsearch === true ? "flex" : "none"),
+    [theme.breakpoints.down("xs")]: {
+      width: "100%"
+    }
+  },
+
+  moreactions: {
+    [theme.breakpoints.down("xs")]: {
+      display: onsearch => (onsearch === true ? "none" : "flex")
+    },
+    display: "none"
+  },
+
   grid: {
+    backgroundColor: theme.palette.background.paper
+  },
+
+  saldo: {
+    padding: theme.spacing(3)
+  },
+  filtro: {
     padding: theme.spacing(2)
   }
 }));
 
-const getTipoTransacao = tipo_transacao => {
-  switch (tipo_transacao) {
-    case "compra":
-      return "Compra";
-    case "uso":
-      return "Uso";
-    case "bonificacao":
-      return "Bonificação";
-    default:
-      return tipo_transacao;
-  }
+const options = {
+  fields: [
+    { name: "id", type: "number" },
+    { name: "data", type: "date" },
+    { name: "conta" },
+    { name: "battletag_ammo", type: "number" },
+    {
+      name: "tipo_transacao",
+      type: "options",
+      options: ["bonificacao", "compra", "uso"]
+    },
+    {
+      name: "compra",
+      type: "struct",
+      fields: [
+        { name: "adquirente" },
+        { name: "autorizacao" },
+        { name: "paracelas", type: "number" },
+        { name: "moeda" },
+        { name: "valor", type: "money" },
+        {
+          name: "meio_pagamento",
+          type: "options",
+          options: ["cartao", "boleto"]
+        },
+        {
+          name: "cartao",
+          type: "struct",
+          fields: [
+            { name: "portador" },
+            { name: "bandeira" },
+            { name: "numero" }
+          ]
+        },
+        {
+          name: "boleto",
+          type: "struct",
+          fields: [
+            { name: "portador" },
+            { name: "cpf", type: "cpf" },
+            { name: "numero" },
+            { name: "dt_vencimento", type: "date" },
+            { name: "dt_pagamento", type: "date" }
+          ]
+        }
+      ]
+    },
+    {
+      name: "uso",
+      type: "struct",
+      fields: [
+        {
+          name: "acao",
+          type: "options",
+          options: ["adicao_operador", "adicao_patrocinador"]
+        },
+        {
+          name: "adicao_operador",
+          type: "struct",
+          fields: [
+            {
+              name: "operacao",
+              type: "struct",
+              fields: [{ name: "id", type: "number" }]
+            },
+            { name: "qt_operador", type: "number" }
+          ]
+        },
+        {
+          name: "adicao_patrocinador",
+          type: "struct",
+          fields: [
+            {
+              name: "operacao",
+              type: "struct",
+              fields: [{ name: "id", type: "number" }, { name: "nome" }]
+            },
+            {
+              name: "patrocinador",
+              type: "struct",
+              fields: [{ name: "id", type: "number" }, { name: "nome" }]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  filter: ["tipo_transacao", "data"],
+  order: ["data"]
 };
 
-const getBattleTagAmmo = battletag_ammo => {
-  if (battletag_ammo > 0) {
-    return <span color="success.main">{battletag_ammo}</span>;
+const data = [
+  {
+    id: 731983,
+    data: "2020-05-24T10:30",
+    conta: "roque@teste.com.br",
+    battletag_ammo: 63,
+    tipo_transacao: "bonificacao",
+    bonificacao: {
+      campanha: "Melhor Operação do Ano"
+    }
+  },
+  {
+    id: 773861,
+    data: "2017-05-24T10:30",
+    conta: "roquebridi@bridi.com.br",
+    battletag_ammo: 100,
+    tipo_transacao: "compra",
+    compra: {
+      adquirente: "paypal",
+      meio_pagamento: "cartao",
+      cartao: {
+        portador: "JOAQUIM DA SILVA",
+        bandeira: "visa",
+        numero: "1234 ****** 223"
+      },
+      autorizacao: 1231231,
+      parcelas: "1",
+      moeda: "BRL",
+      valor: "100,00"
+    }
+  },
+  {
+    id: 129387,
+    data: "2017-05-24T10:30",
+    conta: "roquebridi@bridi.com.br",
+    battletag_ammo: -34,
+    tipo_transacao: "uso",
+    uso: {
+      acao: "adicao_operador",
+      adicao_operador: {
+        operacao: {
+          id: 123221,
+          nome: "Operação Círculo de Fogo"
+        },
+        qt_operador: 17
+      }
+    }
+  },
+  {
+    id: 42134,
+    data: "2017-03-14T10:30",
+    conta: "roquebridi@bridi.com.br",
+    battletag_ammo: -100,
+    tipo_transacao: "uso",
+    uso: {
+      acao: "adicao_patrocinador",
+      adicao_patrocinador: {
+        operacao: {
+          id: 525,
+          nome: "Operação Círculo de Fogo"
+        },
+        patrocinador: {
+          id: 2312345,
+          nome: "Kamikase Store"
+        }
+      }
+    }
+  },
+  {
+    id: 67334,
+    data: "2017-05-24T10:30",
+    conta: "roquebridi@bridi.com.br",
+    battletag_ammo: 10000,
+    tipo_transacao: "compra",
+    compra: {
+      adquirente: "mercadopago",
+      meio_pagamento: "boleto",
+      boleto: {
+        portador: "JOAQUIM DA SILVA",
+        cpf: "000.111.222-44",
+        numero: "10322 231231233 123123213 123 231231321",
+        dt_vencimento: "2020-05-24",
+        dt_pagamento: "2020-05-26"
+      },
+      parcelas: "1",
+      moeda: "BRL",
+      valor: "100,00"
+    }
+  }
+];
+
+const filter = data;
+
+const getBattleTagAmmo = batteltag_ammo => {
+  if (batteltag_ammo > 0) {
+    return (
+      <Box color="success.main">
+        {new Intl.NumberFormat("pt-BR").format(batteltag_ammo)}
+      </Box>
+    );
   } else {
-    return <span color="error.main"> (menos) {battletag_ammo}</span>;
+    return (
+      <Box color="error.main">
+        {new Intl.NumberFormat("pt-BR").format(batteltag_ammo)}
+      </Box>
+    );
   }
 };
 
-export default function MinhasTransacoes() {
-  const classes = useStyles();
-
-  const columns = [
-    { title: "ID", field: "id", type: "numeric" },
-    { title: "Data", field: "data", type: "date" },
-    {
-      title: "BattleTag Ammo",
-      field: "battletag_ammo",
-      type: "numeric",
-      render: rowData => getBattleTagAmmo(rowData.battletag_ammo)
-    },
-    {
-      title: "Tipo Transação",
-      field: "tipo_transacao",
-      render: rowData => getTipoTransacao(rowData.tipo_transacao)
-    }
-  ];
-
-  const data = [
-    {
-      id: 731983,
-      data: "2020-05-24T10:30",
-      battletag_ammo: 63,
-      tipo_transacao: "bonificacao",
-      bonificacao: {
-        campanha: "Melhor Operação do Ano"
-      }
-    },
-    {
-      id: 773861,
-      data: "2017-05-24T10:30",
-      battletag_ammo: 100,
-      tipo_transacao: "compra",
-      compra: {
-        adquirente: "paypal",
-        meio_pagamento: "cartao",
-        cartao: {
-          portador: "JOAQUIM DA SILVA",
-          bandeira: "visa",
-          numero: "1234 ****** 223"
-        },
-        autorizacao: 1231231,
-        parcelas: "1",
-        moeda: "BRL",
-        valor: "100,00"
-      }
-    },
-    {
-      id: 129387,
-      data: "2017-05-24T10:30",
-      battletag_ammo: -34,
-      tipo_transacao: "uso",
-      uso: {
-        acao: "adicao_operador",
-        adicao_operador: {
-          operacao: {
-            id: 123221,
-            nome: "Operação Círculo de Fogo"
-          },
-          qt_operador: 17
-        }
-      }
-    },
-    {
-      id: 42134,
-      data: "2017-03-14T10:30",
-      battletag_ammo: -100,
-      tipo_transacao: "uso",
-      uso: {
-        acao: "adicao_patrocinador",
-        adicao_patrocinador: {
-          operacao: {
-            id: 525,
-            nome: "Operação Círculo de Fogo"
-          },
-          patrocinador: {
-            id: 2312345,
-            nome: "Kamikase Store"
-          }
-        }
-      }
-    },
-    {
-      id: 67334,
-      data: "2017-05-24T10:30",
-      battletag_ammo: 10000,
-      tipo_transacao: "compra",
-      compra: {
-        adquirente: "mercadopago",
-        meio_pagamento: "boleto",
-        boleto: {
-          portador: "JOAQUIM DA SILVA",
-          cpf: "000.111.222-44",
-          numero: "10322 231231233 123123213 123 231231321",
-          dt_vencimento: "2020-05-24",
-          dt_pagamento: "2020-05-26"
-        },
-        parcelas: "1",
-        moeda: "BRL",
-        valor: "100,00"
-      }
-    }
-  ];
-
-  const localization = {
-    pagination: {
-      labelDisplayedRows: "{from}-{to} de {count}",
-      labelRowsSelect: "linhas",
-      firstAriaLabel: "Primeira Página",
-      firstTooltip: "Primeira Página",
-      previousAriaLabel: "Página Anterior",
-      previousTooltip: "Página Anterior",
-      nextAriaLabel: "Próxima Página",
-      nextTooltip: "Próxima Página",
-      lastAriaLabel: "Última Página",
-      lastTooltip: "Última Página"
-    },
-    toolbar: {
-      nRowsSelected: "{0} linha(s) selecionadas",
-      searchTooltip: "Busca",
-      searchPlaceholder: "Busca"
-    },
-    header: {
-      actions: "Ações"
-    },
-    body: {
-      emptyDataSourceMessage: "Nenhum registro encontrado",
-      filterRow: {
-        filterTooltip: "Filtro"
-      }
-    }
-  };
-
-  const tableIcons = {
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-    DetailPanel: forwardRef((props, ref) => (
-      <ChevronRight {...props} ref={ref} />
-    )),
-    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    PreviousPage: forwardRef((props, ref) => (
-      <ChevronLeft {...props} ref={ref} />
-    )),
-    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-    SortArrow: forwardRef((props, ref) => (
-      <ArrowDownward {...props} ref={ref} />
-    )),
-    ThirdStateCheck: forwardRef((props, ref) => (
-      <Remove {...props} ref={ref} />
-    )),
-    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
-  };
-
-  const getDetalheTransacao = transacao => {
-    switch (transacao.tipo_transacao) {
-      case "bonificacao":
-        return (
-          <TableRowBonificacao campanha={transacao.bonificacao.campanha} />
-        );
-      case "uso":
-        return (
-          <TableRowUso
-            acao={transacao.uso.acao}
-            adicao_operador={transacao.uso.adicao_operador}
-            adicao_patrocinador={transacao.uso.adicao_patrocinador}
+const getTransacoes = transacoes => {
+  transacoes.map((filtered, i) => {
+    filtered.data = new Intl.DateTimeFormat("en-EN").format(
+      Date.parse(filtered.data)
+    );
+    return (
+      <React.Fragment>
+        <ListSubheader>{filtered.data}</ListSubheader>
+        <ListItem button>
+          <ListItemIcon>icone</ListItemIcon>
+          <ListItemText
+            primary={filtered.tipo_transacao}
+            secondary="Paypal - R$ 100,00"
           />
-        );
-      case "compra":
-        return (
-          <TableRowCompra
-            adquirente={transacao.compra.adquirente}
-            meio_pagamento={transacao.compra.meio_pagamento}
-            boleto={transacao.compra.boleto}
-            cartao={transacao.compra.cartao}
-            autorizacao={transacao.compra.autorizacao}
-            parcelas={transacao.compra.parcelas}
-            moeda={transacao.compra.moeda}
-            valor={transacao.compra.valor}
-          />
-        );
-      default:
-        return "";
-    }
+          <ListItemSecondaryAction>
+            {getBattleTagAmmo(filtered.battletag_ammo)}
+          </ListItemSecondaryAction>
+        </ListItem>
+      </React.Fragment>
+    );
+  });
+};
+
+export default function MinhasTransacoes(props) {
+  const [onsearch, setOnSearch] = React.useState(false);
+  const handleOnSearch = busca => {
+    setOnSearch(busca);
   };
 
-  const detailPanel = [
-    {
-      tooltip: "Detalhes",
-      render: rowData => {
-        return (
-          <TableContainer className={classes.grid}>
-            <Table aria-label="detalhes">
-              <TableBody>{getDetalheTransacao(rowData)}</TableBody>
-            </Table>
-          </TableContainer>
-        );
-      }
+  const classes = useStyles(onsearch);
+
+  const openSearch = () => {
+    handleOnSearch(true);
+    handleClose();
+  };
+  const closeSearch = () => {
+    handleOnSearch(false);
+  };
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const [selectedDate, setSelectedDate] = React.useState(
+    new Date("2014-08-18T21:11:54")
+  );
+  const handleDateChange = date => {
+    setSelectedDate(date);
+  };
+
+  const [filtroState, setFiltroState] = React.useState(false);
+  const toggleFiltro = state => event => {
+    handleClose();
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
     }
-  ];
+    setFiltroState(state);
+  };
 
   return (
-    <TemplateMenu2>
-      <Grid container className={classes.grid} justify="center">
-        <Grid item xs={12} sm={10} md={8} lg={6}>
-          <MaterialTable
-            title={
-              <Typography gutterBottom variant="h6" component="h6">
-                <SwapHorizontalCircleIcon />
-                Minhas Transações
-              </Typography>
+    <TemplateMenu setMenuState={props.setMenuState} menuState={props.menuState}>
+      <AppBar>
+        <Toolbar>
+          <IconButton
+            edge="start"
+            aria-label="abrir menu"
+            onClick={props.setMenuState(true)}
+            className={classes.menu}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography className={classes.titulo} component="h6" noWrap>
+            MINHAS TRANSAÇÕES
+          </Typography>
+          <Input
+            className={classes.searchinput}
+            variant="outlined"
+            placeholder="Buscar"
+            id="busca"
+            startAdornment={
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
             }
-            icons={tableIcons}
-            columns={columns}
-            data={data}
-            localization={localization}
-            detailPanel={detailPanel}
-            onRowClick={(event, rowData, togglePanel) => togglePanel()}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton aria-label="limpar" onClick={closeSearch}>
+                  <CloseIcon />
+                </IconButton>
+              </InputAdornment>
+            }
           />
+          <IconButton
+            aria-label="buscar"
+            onClick={openSearch}
+            className={classes.searchicon}
+          >
+            <SearchIcon />
+          </IconButton>
+          <IconButton
+            edge="start"
+            aria-label="abrir filtro"
+            onClick={toggleFiltro(true)}
+            className={classes.filtericon}
+          >
+            <FilterListIcon />
+          </IconButton>
+
+
+          <IconButton
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            className={classes.moreactions}
+            onClick={handleClick}
+          >
+            <MoreVertIcon />
+          </IconButton>
+          <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)}>
+            <MenuItem onClick={openSearch}>
+              <SearchIcon /> Buscar
+            </MenuItem>
+            <MenuItem onClick={toggleFiltro(true)}>
+              <FilterListIcon /> Filtar
+            </MenuItem>
+          </Menu>
+        </Toolbar>
+      </AppBar>
+      <Drawer open={filtroState} onClose={toggleFiltro(false)} anchor="right">
+        <div role="presentation" onKeyDown={toggleFiltro(false)}>
+          <Typography variant="subtitle1" className={classes.filtro}>
+            Filtro
+          </Typography>
+          <Divider />
+          <List>
+            <ListSubheader>Tipo de Transação</ListSubheader>
+            <ListItem role={undefined} dense button>
+              <ListItemIcon>
+                <Checkbox edge="start" disableRipple checked="true" />
+              </ListItemIcon>
+              <ListItemText primary={"Bonificação"} />
+            </ListItem>
+            <ListItem role={undefined} dense button>
+              <ListItemIcon>
+                <Checkbox edge="start" disableRipple checked="true" />
+              </ListItemIcon>
+              <ListItemText primary={"Compra"} />
+            </ListItem>
+            <ListItem role={undefined} dense button>
+              <ListItemIcon>
+                <Checkbox edge="start" disableRipple checked="true" />
+              </ListItemIcon>
+              <ListItemText primary={"Uso"} />
+            </ListItem>
+            <ListSubheader>Data da Transação</ListSubheader>
+            <ListItem role={undefined} dense button>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="MM/dd/yyyy"
+                  margin="normal"
+                  id="date-picker-inline"
+                  label="Início"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    "aria-label": "alterar data inicial"
+                  }}
+                />
+              </MuiPickersUtilsProvider>
+            </ListItem>
+            <ListItem role={undefined} dense button>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="MM/dd/yyyy"
+                  margin="normal"
+                  id="date-picker-inline"
+                  label="Fim"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    "aria-label": "alterar data final"
+                  }}
+                />
+              </MuiPickersUtilsProvider>
+            </ListItem>
+            <Divider />
+            <ListSubheader>Ordenação</ListSubheader>
+            <ListItem role={undefined} dense button>
+              <Radio
+                value="a"
+                name="ordenacao"
+                inputProps={{ "aria-label": "A" }}
+              />{" "}
+              Data decrescente
+            </ListItem>
+            <ListItem role={undefined} dense button>
+              <Radio
+                value="a"
+                name="ordenacao"
+                inputProps={{ "aria-label": "A" }}
+              />{" "}
+              Data ascendente
+            </ListItem>
+          </List>
+        </div>
+      </Drawer>
+      <Grid container justify="center">
+        <Grid item xs={12} sm={7} md={5} lg={4} className={classes.grid}>
+          <Grid item container justify="space-between">
+            <Grid item>
+              <Typography variant="h6" className={classes.saldo}>
+                SALDO
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="h6" className={classes.saldo}>
+                385
+              </Typography>
+            </Grid>
+          </Grid>
+          <Divider />
+          <List>
+            {getTransacoes(filter)}
+            <ListSubheader>03/12/2099</ListSubheader>
+            <ListItem button>
+              <ListItemIcon>
+                <SvgIcon muiname="SvgIcon">
+                  <path
+                    fill="currentColor"
+                    d="M2,15V12H5V10L9,13.5L5,17V15H2M22,8.7V10H10V8.7L16,5L22,8.7M10,17H22V19H10V17M15,11H17V16H15V11M11,11H13V16H11V11M19,11H21V16H19V11Z"
+                  />
+                </SvgIcon>
+              </ListItemIcon>
+              <ListItemText primary="Compra" secondary="Paypal - R$ 100,00" />
+              <ListItemSecondaryAction>1.000</ListItemSecondaryAction>
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <SvgIcon muiname="SvgIcon">
+                  <path
+                    fill="currentColor"
+                    d="M15,15V12H18V10L22,13.5L18,17V15H15M14,8.7V10H2V8.7L8,5L14,8.7M2,17H14V19H2V17M7,11H9V16H7V11M3,11H5V16H3V11M11,11H13V16H11V11Z"
+                  />
+                </SvgIcon>
+              </ListItemIcon>
+              <ListItemText primary="Uso" secondary="Adição de Operadores" />
+              <ListItemSecondaryAction>-152</ListItemSecondaryAction>
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <SvgIcon muiname="SvgIcon">
+                  <path
+                    fill="currentColor"
+                    d="M2,15V12H5V10L9,13.5L5,17V15H2M22,8.7V10H10V8.7L16,5L22,8.7M10,17H22V19H10V17M15,11H17V16H15V11M11,11H13V16H11V11M19,11H21V16H19V11Z"
+                  />
+                </SvgIcon>
+              </ListItemIcon>
+              <ListItemText
+                primary="Bonificação"
+                secondary="Melhor evento do ano"
+              />
+              <ListItemSecondaryAction>100</ListItemSecondaryAction>
+            </ListItem>
+            <Divider />
+            <ListSubheader>02/12/2019</ListSubheader>
+            <ListItem button>
+              <ListItemIcon>
+                <SvgIcon muiname="SvgIcon">
+                  <path
+                    fill="currentColor"
+                    d="M15,15V12H18V10L22,13.5L18,17V15H15M14,8.7V10H2V8.7L8,5L14,8.7M2,17H14V19H2V17M7,11H9V16H7V11M3,11H5V16H3V11M11,11H13V16H11V11Z"
+                  />
+                </SvgIcon>
+              </ListItemIcon>
+              <ListItemText primary="Uso" secondary="Adição de Operadores" />
+              <ListItemSecondaryAction>-50</ListItemSecondaryAction>
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <SvgIcon muiname="SvgIcon">
+                  <path
+                    fill="currentColor"
+                    d="M15,15V12H18V10L22,13.5L18,17V15H15M14,8.7V10H2V8.7L8,5L14,8.7M2,17H14V19H2V17M7,11H9V16H7V11M3,11H5V16H3V11M11,11H13V16H11V11Z"
+                  />
+                </SvgIcon>
+              </ListItemIcon>
+              <ListItemText primary="Uso" secondary="Adição de Patrocinador" />
+              <ListItemSecondaryAction>-300</ListItemSecondaryAction>
+            </ListItem>
+          </List>
         </Grid>
       </Grid>
-    </TemplateMenu2>
+    </TemplateMenu>
   );
 }

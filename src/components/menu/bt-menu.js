@@ -30,15 +30,12 @@ export default function BtMenu() {
       </Typography>
       <Divider />
       <List component="nav">
-        <ListSubheader component="div">Loja</ListSubheader>
-        <BtItemNenu nome="Pacote" caminho="/pacotes">
+        <BtItemNenu nome="Loja" caminho="/pacotes">
           <StoreIcon />
         </BtItemNenu>
-        <ListSubheader component="div">Suporte</ListSubheader>
-        <BtItemNenu nome="Meus Chamados" caminho="/meus-chamados">
+        <BtItemNenu nome="Suporte" caminho="/meus-chamados">
           <ReceiptOutlinedIcon />
         </BtItemNenu>
-        <ListSubheader component="div">Conta</ListSubheader>
         <BtItemNenu nome="Minhas Transações" caminho="/minhas-transacoes">
           <SwapHorizIcon />
         </BtItemNenu>

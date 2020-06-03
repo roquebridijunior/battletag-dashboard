@@ -40,6 +40,7 @@ export default function TemplateMenu2(props) {
   };
 
   const [state, setState] = React.useState();
+
   const toggleDrawer = open => event => {
     if (
       event.type === "keydown" &&

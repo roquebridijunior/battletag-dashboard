@@ -1,9 +1,16 @@
 import React from "react";
 import MaterialTable from "material-table";
 import TemplateMenu2 from "../templates/template-menu2.js";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import TableBody from "@material-ui/core/TableBody";
+import Table from "@material-ui/core/Table";
+import TableContainer from "@material-ui/core/TableContainer";
 
 import { forwardRef } from "react";
 
+import ReceiptIcon from "@material-ui/icons/Receipt";
 import AddBox from "@material-ui/icons/AddBox";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
@@ -20,63 +27,80 @@ import Clear from "@material-ui/icons/Clear";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 
+const useStyles = makeStyles(theme => ({
+  grid: {
+    padding: theme.spacing(2)
+  }
+}));
+
+const getDetalheChamado = transacao => {
+  switch (transacao.topico) {
+    case "conta":
+    case "aplicativo":
+    case "pagamento":
+    case "creditos":
+    case "informacao":
+    case "reclamacao":
+      return "Reclamação";
+    //<TableRowBonificacao campanha={transacao.bonificacao.campanha} />
+    default:
+      return "opa";
+  }
+};
+
 export default function Chamados() {
-  const [state, setState] = React.useState({
-    columns: [
-      { title: "ID", field: "id", type: "numeric" },
-      { title: "Conta", field: "conta" },
-      { title: "Data", field: "data", type: "date" },
-      { title: "Tópico", field: "topico" },
-      { title: "Status", field: "status" }
-    ],
-    data: [
-      {
-        id: 2351,
-        conta: "joaquim@joca.com.br",
-        data: "2020-05-24T10:30",
-        topico: "Compras",
-        status: "Aberto"
-      },
-      {
-        id: 4614,
-        conta: "manuel@santos.com.br",
-        data: "2020-05-24T10:30",
-        topico: "Dúvida",
-        status: "Aberto"
-      },
-      {
-        id: 6345,
-        conta: "manuel@santos.com.br",
-        data: "2020-05-24T10:30",
-        topico: "Reclamação",
-        status: "Fechado"
-      },
-      {
-        id: 102938,
-        conta: "joaquim@manoel.com.br",
-        data: "2020-05-24T10:30",
-        topico: "Dúvida",
-        status: "Fechado"
-      },
-      {
-        id: 14893,
-        conta: "manoel@joaquim.com.br",
-        data: "2020-05-24T10:30",
-        topico: "Dúvida",
-        status: "Fechado"
-      }
-    ]
-  });
+  const classes = useStyles();
+
+  const columns = [
+    { title: "ID", field: "id", type: "numeric" },
+    { title: "Conta", field: "conta" },
+    { title: "Data", field: "data", type: "date" },
+    { title: "Tópico", field: "topico" },
+    { title: "Status", field: "status" }
+  ];
+
+  const data = [
+    {
+      id: 2351,
+      conta: "joaquim@joca.com.br",
+      data: "2020-05-24T10:30",
+      topico: "compras",
+      status: "aberto"
+    },
+    {
+      id: 4614,
+      conta: "manuel@santos.com.br",
+      data: "2020-05-24T10:30",
+      topico: "duvida",
+      status: "aberto"
+    },
+    {
+      id: 6345,
+      conta: "manuel@santos.com.br",
+      data: "2020-05-24T10:30",
+      topico: "reclamacao",
+      status: "fechado"
+    },
+    {
+      id: 102938,
+      conta: "joaquim@manoel.com.br",
+      data: "2020-05-24T10:30",
+      topico: "duvida",
+      status: "fechado"
+    },
+    {
+      id: 14893,
+      conta: "manoel@joaquim.com.br",
+      data: "2020-05-24T10:30",
+      topico: "duvida",
+      status: "fechado"
+    }
+  ];
 
   const localization = {
     pagination: {
       labelDisplayedRows: "{from}-{to} de {count}",
-      labelRowsSelect: "linhas"
-    },
-    toolbar: {
-      nRowsSelected: "{0} linha(s) selecionadas",
-      searchTooltip: "Busca",
-      searchPlaceholder: "Busca",
+      labelRowsSelect: "linhas",
       firstAriaLabel: "Primeira Página",
       firstTooltip: "Primeira Página",
       previousAriaLabel: "Página Anterior",
@@ -85,6 +109,11 @@ export default function Chamados() {
       nextTooltip: "Próxima Página",
       lastAriaLabel: "Última Página",
       lastTooltip: "Última Página"
+    },
+    toolbar: {
+      nRowsSelected: "{0} linha(s) selecionadas",
+      searchTooltip: "Busca",
+      searchPlaceholder: "Busca"
     },
     header: {
       actions: "Ações"
@@ -127,18 +156,14 @@ export default function Chamados() {
 
   const detailPanel = [
     {
-      tooltip: "Show Name",
+      tooltip: "Detalhes",
       render: rowData => {
         return (
-          <div
-            style={{
-              fontSize: 100,
-              textAlign: "center",
-              color: "white"
-            }}
-          >
-            TESTE - {rowData.id}
-          </div>
+          <TableContainer className={classes.grid}>
+            <Table aria-label="detalhes">
+              <TableBody>{getDetalheChamado(rowData)}</TableBody>
+            </Table>
+          </TableContainer>
         );
       }
     }
@@ -146,15 +171,24 @@ export default function Chamados() {
 
   return (
     <TemplateMenu2>
-      <MaterialTable
-        title="Chamados"
-        icons={tableIcons}
-        columns={state.columns}
-        data={state.data}
-        localization={localization}
-        detailPanel={detailPanel}
-        onRowClick={(event, rowData, togglePanel) => togglePanel()}
-      />
+      <Grid container className={classes.grid} justify="center">
+        <Grid item xs={12} sm={10} md={8} lg={6}>
+          <MaterialTable
+            title={
+              <Typography gutterBottom variant="h6" component="h6">
+                <ReceiptIcon />
+                Chamados
+              </Typography>
+            }
+            icons={tableIcons}
+            columns={columns}
+            data={data}
+            localization={localization}
+            detailPanel={detailPanel}
+            onRowClick={(event, rowData, togglePanel) => togglePanel()}
+          />
+        </Grid>
+      </Grid>
     </TemplateMenu2>
   );
 }
